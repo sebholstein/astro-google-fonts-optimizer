@@ -9,7 +9,9 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro-google-fonts-optimizer": "workspace:*",
     "astro": "^1.0.0-beta.73"
+  },
+  "dependencies": {
+    "astro-google-fonts-optimizer": "workspace:*"
   }
 }

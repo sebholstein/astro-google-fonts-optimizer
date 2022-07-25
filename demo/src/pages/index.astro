@@ -8,21 +8,13 @@ import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
 	<title>Welcome to Astro</title>
-	<style>
-		h {
-			display: block;
-			font-size: 2em;
-			font-weight: bold;
-			margin-block: 0.67em;
-		}
-	</style>
-	<GoogleFontsOptimizer
-		url={["https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;700&display=swap", "https://fonts.googleapis.com/css2?family=Ibarra+Real+Nova&display=swap"
-		]}>
+
+	<GoogleFontsOptimizer url={"https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;700&display=swap"}>
 	</GoogleFontsOptimizer>
 </head>
 
-<body>
+<body style="font-family: 'Inter'">
+	Hello wolrd!
 </body>
 
 </html>

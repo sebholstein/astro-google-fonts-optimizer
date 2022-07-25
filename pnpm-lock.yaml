@@ -12,9 +12,10 @@ importers:
     specifiers:
       astro: ^1.0.0-beta.73
       astro-google-fonts-optimizer: workspace:*
+    dependencies:
+      astro-google-fonts-optimizer: link:../packages/astro-google-fonts-optimizer
     devDependencies:
       astro: 1.0.0-beta.73
-      astro-google-fonts-optimizer: link:../packages/astro-google-fonts-optimizer
 
   packages/astro-google-fonts-optimizer:
     specifiers: {}

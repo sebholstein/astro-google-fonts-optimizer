@@ -1,12 +1,13 @@
 ---
+import { downloadFontCSS } from "./font-utils";
+
 export interface Props {
     url: string[] | string;
 }
 const props = Astro.props as Props;
 const urls = Array.isArray(props.url) ? props.url : [props.url];
-const contents = await Promise.all(
-    urls.map((url) => fetch(url).then((res) => res.text()).then(t => t.replaceAll(new RegExp("  +", "g"), "").replaceAll("\t", "").replaceAll("\n", " ")))
-);
+
+const contents = await Promise.all(urls.map(url => downloadFontCSS(url)))
 ---
 
 {contents.map(styles => <>
