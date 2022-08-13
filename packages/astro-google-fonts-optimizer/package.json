@@ -7,10 +7,12 @@
   "homepage": "https://github.com/sebholstein/astro-google-fonts-optimizer",
   "exports": {
     ".": "./index.js",
+    "./font-utils": "./font-utils.ts",
     "./GoogleFontsOptimizer": "./GoogleFontsOptimizer.astro"
   },
   "files": [
     "index.js",
+    "font-utils.ts",
     "GoogleFontsOptimizer.astro",
     "../../README.md"
   ],
