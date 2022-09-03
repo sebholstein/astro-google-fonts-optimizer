@@ -4,6 +4,7 @@
   "version": "0.2.1",
   "private": false,
   "type": "module",
+  "types": "index.d.ts",
   "homepage": "https://github.com/sebholstein/astro-google-fonts-optimizer",
   "exports": {
     ".": "./index.js",
@@ -12,6 +13,7 @@
   },
   "files": [
     "index.js",
+    "index.d.ts",
     "font-utils.ts",
     "GoogleFontsOptimizer.astro",
     "../../README.md"
