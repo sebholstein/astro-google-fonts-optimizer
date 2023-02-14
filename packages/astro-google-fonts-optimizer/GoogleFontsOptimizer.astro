@@ -13,7 +13,7 @@ const contents = await Promise.all(urls.map(url => downloadFontCSS(url)))
 {contents.length > 0 &&
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />}
 {contents.map(styles => <>
-    <style type="text/css" set:html={styles} is:inline>
+    <style set:html={styles} is:inline>
     </style>
 </>
 )}
