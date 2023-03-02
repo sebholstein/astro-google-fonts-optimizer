@@ -4,7 +4,7 @@ This [Astro](https://astro.build/) integration optimizes the performance of incl
 It downloads the CSS of a Google Fonts stylesheet and inlines it directly into the page.  
 This can improve your Lighthouse score significantly.
 
-The project is inspied by the [NextJS Google Fonts automatic optimization](https://nextjs.org/blog/next-10-2#automatic-webfont-optimization) feature.
+The project is inspired by the [NextJS Google Fonts automatic optimization](https://nextjs.org/blog/next-10-2#automatic-webfont-optimization) feature.
 
 ## Installation
 
