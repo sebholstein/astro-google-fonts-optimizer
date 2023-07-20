@@ -7,7 +7,7 @@ export interface Props {
 const props = Astro.props as Props;
 const urls = Array.isArray(props.url) ? props.url : [props.url];
 
-const contents = await Promise.all(urls.map(url => downloadFontCSS(url)))
+const contents = await Promise.all(urls.map(url => downloadFontCSS(url))).catch(() => [])
 ---
 
 {contents.length > 0 &&
