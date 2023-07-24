@@ -7,13 +7,29 @@ export interface Props {
 const props = Astro.props as Props;
 const urls = Array.isArray(props.url) ? props.url : [props.url];
 
-const contents = await Promise.all(urls.map(url => downloadFontCSS(url)))
+const contents = await Promise.all(
+    urls.map(async (url) => {
+        try {
+            const css = await downloadFontCSS(url);
+            return { css }
+        } catch (err) {
+            return { url }
+        }
+    })
+)
 ---
 
 {contents.length > 0 &&
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />}
-{contents.map(styles => <>
-    <style set:html={styles} is:inline>
-    </style>
-</>
-)}
+{contents.map(content => {
+    if (content.css) {
+        return (
+            <>
+                <style set:html={content.css} is:inline>
+                </style>
+            </>
+        )
+    }
+
+    return <link href={content.url} rel="stylesheet" />
+})}

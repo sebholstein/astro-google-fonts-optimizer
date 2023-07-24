@@ -15,7 +15,12 @@ export function downloadFontCSS(url: string): Promise<string> {
   const fontDownloads = Promise.all(
     userAgents.map((entry) => {
       return fetch(url, { headers: { 'User-Agent': entry.ua } })
-        .then((res) => res.text())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.text();
+        })
         .then((t) =>
           t.replace(/  +/g, '').replace(/\t+/g, '').replace(/\n+/g, '')
         );
