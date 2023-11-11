@@ -3,9 +3,11 @@ import { downloadFontCSS } from "./font-utils";
 
 export interface Props {
     url: string[] | string;
+    preconnectUrl?: string;
 }
 const props = Astro.props as Props;
 const urls = Array.isArray(props.url) ? props.url : [props.url];
+const preconnect = props.preconnectUrl ?? 'https://fonts.gstatic.com';
 
 const contents = await Promise.all(
     urls.map(async (url) => {
@@ -19,8 +21,9 @@ const contents = await Promise.all(
 )
 ---
 
-{contents.length > 0 &&
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />}
+{contents.length > 0 && preconnect && (
+  <link rel="preconnect" href={preconnect} crossorigin="anonymous" />
+)}
 {contents.map(content => {
     if (content.css) {
         return (
