@@ -46,4 +46,16 @@ This will create the following output:
 </head>
 ```
 
+If you're using a Google Fonts compatible drop-in such as [Bunny Fonts](https://fonts.bunny.net/), you can specify the `preconnect`-URL via the `preconnectUrl` prop like this:
+
+```
+<GoogleFontsOptimizer url="https://fonts.bunny.net/css2?family=Inter:wght@200;400;500;700&display=swap" preconnectUrl="https://fonts.bunny.net" />
+```
+
+If left empty, the preconnect-URL will default to `https://fonts.gstatic.com`. Otherwise, the given value is used:
+
+```
+<link rel="preconnect" href="https://fonts.bunny.net" crossorigin="anonymous">
+```
+
 You can read about this performance optimization in [this excellent blog post](https://dev.to/ekafyi/first-impressions-on-next-js-automatic-font-optimization-32a1).
