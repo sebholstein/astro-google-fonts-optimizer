@@ -1,11 +1,13 @@
-type Fn<T extends unknown[], R> = (...args: T) => Promise<R>;
+type Fn<Args extends unknown[], ReturnType> = (
+  ...args: Args
+) => Promise<ReturnType>;
 
 // Define the cacheWrapper function with type safety
-export const cacheWrapper = <T extends unknown[], R>(
-  fn: Fn<T, R>,
-): Fn<T, R> => {
-  const cache = new Map<string, R>();
-  return async (...args: T): Promise<R> => {
+export const cacheWrapper = <Args extends unknown[], ReturnType>(
+  fn: Fn<Args, ReturnType>,
+): Fn<Args, ReturnType> => {
+  const cache = new Map<string, ReturnType>();
+  return async (...args: Args): Promise<ReturnType> => {
     const cacheKey = JSON.stringify(args);
     const cachedData = cache.get(cacheKey);
     if (cachedData) {
@@ -17,12 +19,12 @@ export const cacheWrapper = <T extends unknown[], R>(
   };
 };
 
-export const tenacityWrapper = <T extends any[], R>(
-  fn: Fn<T, R>,
+export const tenacityWrapper = <Args extends any[], ReturnType>(
+  fn: Fn<Args, ReturnType>,
   retries: number,
   delay: number = 0,
-): Fn<T, R> => {
-  return async (...args: T): Promise<R> => {
+): Fn<Args, ReturnType> => {
+  return async (...args: Args): Promise<ReturnType> => {
     let lastError: Error | null = null;
 
     for (let attempt = 0; attempt < retries; attempt++) {
