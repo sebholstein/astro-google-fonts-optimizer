@@ -32,8 +32,7 @@ export async function downloadFontCSS(url: string): Promise<string> {
   const fontDownloads: string[] = [];
   for await (const agent of userAgents) {
     const fontData = await cachedFetch(agent, url).catch((err) => {
-      throw new Error(`Failed to download ${url}: 
-${err}`);
+      throw new Error(`Failed to download ${url}:\n${err}`);
     });
     fontDownloads.push(fontData);
   }
