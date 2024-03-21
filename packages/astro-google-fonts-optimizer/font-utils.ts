@@ -26,7 +26,7 @@ const fetchFunc = <Args extends (typeof userAgents)[number]>(
     })
     .then((t) => t.replace(/  +/g, '').replace(/\t+/g, '').replace(/\n+/g, ''));
 
-const cachedFetch = cacheWrapper(tenacityWrapper(fetchFunc, 3, 500));
+const cachedFetch = cacheWrapper(tenacityWrapper(fetchFunc, 3, 100));
 
 export async function downloadFontCSS(url: string): Promise<string> {
   const fontDownloads: string[] = [];
