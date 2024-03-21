@@ -24,18 +24,14 @@ export const tenacityWrapper = <T extends any[], R>(
   return async (...args: T): Promise<R> => {
     let lastError: Error | null = null;
 
-    for (let attempt = 0; attempt <= retries; attempt++) {
+    for (let attempt = 0; attempt < retries; attempt++) {
       try {
         return await fn(...args);
       } catch (error) {
         lastError = error;
-        console.error(`Attempt ${attempt + 1} failed. Retrying...`);
-        if (attempt < retries) {
-          await new Promise((resolve) => setTimeout(resolve, delay));
-        }
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
-
     // If all retries failed, throw the last error
     throw lastError;
   };
