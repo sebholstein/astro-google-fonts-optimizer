@@ -11,12 +11,8 @@ const preconnect = props.preconnectUrl ?? 'https://fonts.gstatic.com';
 
 const contents = await Promise.all(
     urls.map(async (url) => {
-        try {
-            const css = await downloadFontCSS(url);
-            return { css }
-        } catch (err) {
-            return { url }
-        }
+      const css = await downloadFontCSS(url);
+      return { css }
     })
 )
 ---
@@ -25,14 +21,11 @@ const contents = await Promise.all(
   <link rel="preconnect" href={preconnect} crossorigin="anonymous" />
 )}
 {contents.map(content => {
-    if (content.css) {
         return (
             <>
                 <style set:html={content.css} is:inline>
                 </style>
             </>
         )
-    }
 
-    return <link href={content.url} rel="stylesheet" />
 })}
