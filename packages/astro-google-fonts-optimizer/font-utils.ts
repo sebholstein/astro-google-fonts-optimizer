@@ -31,7 +31,10 @@ const cachedFetch = cacheWrapper(tenacityWrapper(fetchFunc, 3, 500));
 export async function downloadFontCSS(url: string): Promise<string> {
   const fontDownloads: string[] = [];
   for await (const agent of userAgents) {
-    const fontData = await cachedFetch(agent, url);
+    const fontData = await cachedFetch(agent, url).catch((err) => {
+      throw new Error(`Failed to download ${url}: 
+${err}`);
+    });
     fontDownloads.push(fontData);
   }
   return fontDownloads.join(' ');
