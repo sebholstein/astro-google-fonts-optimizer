@@ -26,15 +26,22 @@ const fetchFunc = <Args extends (typeof userAgents)[number]>(
     })
     .then((t) => t.replace(/  +/g, '').replace(/\t+/g, '').replace(/\n+/g, ''));
 
-const cachedFetch = cacheWrapper(tenacityWrapper(fetchFunc, 3, 100));
+export const initialise = (
+  retryAttempts: number = 3,
+  retryInterval: number = 100,
+) => {
+  const cachedFetch = cacheWrapper(
+    tenacityWrapper(fetchFunc, retryAttempts, retryInterval),
+  );
 
-export async function downloadFontCSS(url: string): Promise<string> {
-  const fontDownloads: string[] = [];
-  for await (const agent of userAgents) {
-    const fontData = await cachedFetch(agent, url).catch((err) => {
-      throw new Error(`Failed to download ${url}:\n${err}`);
-    });
-    fontDownloads.push(fontData);
-  }
-  return fontDownloads.join(' ');
-}
+  return async function downloadFontCSS(url: string): Promise<string> {
+    const fontDownloads: string[] = [];
+    for await (const agent of userAgents) {
+      const fontData = await cachedFetch(agent, url).catch((err) => {
+        throw new Error(`Failed to download ${url}:\n${err}`);
+      });
+      fontDownloads.push(fontData);
+    }
+    return fontDownloads.join(' ');
+  };
+};
