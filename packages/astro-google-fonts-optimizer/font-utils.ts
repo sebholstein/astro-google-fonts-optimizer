@@ -1,3 +1,5 @@
+import { cacheWrapper, tenacityWrapper } from './wrappers';
+
 const userAgents: { name: string; ua: string }[] = [
   // this must always be the first element here!
   {
@@ -11,20 +13,25 @@ const userAgents: { name: string; ua: string }[] = [
   },
 ];
 
-export function downloadFontCSS(url: string): Promise<string> {
-  const fontDownloads = Promise.all(
-    userAgents.map((entry) => {
-      return fetch(url, { headers: { 'User-Agent': entry.ua } })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error(res.statusText);
-          }
-          return res.text();
-        })
-        .then((t) =>
-          t.replace(/  +/g, '').replace(/\t+/g, '').replace(/\n+/g, '')
-        );
+const fetchFunc = <Args extends (typeof userAgents)[number]>(
+  entry: Args,
+  url: string,
+) =>
+  fetch(url, { headers: { 'User-Agent': entry.ua } })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(res.statusText);
+      }
+      return res.text();
     })
-  );
-  return fontDownloads.then((contents) => contents.join(' '));
+    .then((t) => t.replace(/  +/g, '').replace(/\t+/g, '').replace(/\n+/g, ''));
+
+const cachedFetch = cacheWrapper(tenacityWrapper(fetchFunc, 3, 100));
+
+export async function downloadFontCSS(url: string): Promise<string> {
+  const fontDownloads: string[] = [];
+  for await (const a of userAgents) {
+    fontDownloads.push(await cachedFetch(a, url)); // for await (const)
+  }
+  return fontDownloads.join(' ');
 }
