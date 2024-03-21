@@ -9,10 +9,8 @@ export const cacheWrapper = <T extends unknown[], R>(
     const cacheKey = JSON.stringify(args);
     const cachedData = cache.get(cacheKey);
     if (cachedData) {
-      console.log('cache hit');
       return cachedData;
     }
-    console.log('cache miss');
     const data = await fn(...args);
     cache.set(cacheKey, data);
     return data;
