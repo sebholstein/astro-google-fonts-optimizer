@@ -1,20 +1,26 @@
 ---
-import { downloadFontCSS } from "./font-utils";
+import { initialise } from "./font-utils";
 
 export interface Props {
     url: string[] | string;
     preconnectUrl?: string;
+    retryAttempts?: number;
+    retryInterval?: number;
 }
-const props = Astro.props as Props;
-const urls = Array.isArray(props.url) ? props.url : [props.url];
-const preconnect = props.preconnectUrl ?? 'https://fonts.gstatic.com';
 
+const { url, retryInterval, retryAttempts, preconnectUrl } = Astro.props as Props;
+
+const urls = Array.isArray(url) ? url : [url];
+const preconnect = preconnectUrl ?? 'https://fonts.gstatic.com';
+
+const downloadFontCSS = initialise(retryAttempts,retryInterval)
 const contents = await Promise.all(
     urls.map(async (url) => {
         try {
             const css = await downloadFontCSS(url);
             return { css }
         } catch (err) {
+            console.error(`\nError while downloading "${url}".\n${err}\n`)
             return { url }
         }
     })
