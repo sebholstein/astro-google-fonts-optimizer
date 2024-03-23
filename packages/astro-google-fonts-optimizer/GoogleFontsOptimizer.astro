@@ -13,7 +13,7 @@ const { url, retryInterval, retryAttempts, preconnectUrl } = Astro.props as Prop
 const urls = Array.isArray(url) ? url : [url];
 const preconnect = preconnectUrl ?? 'https://fonts.gstatic.com';
 
-const downloadFontCSS = initialise(retryAttempts,retryInterval)
+const downloadFontCSS = initialise(retryAttempts, retryInterval)
 const contents = await Promise.all(
     urls.map(async (url) => {
         try {
