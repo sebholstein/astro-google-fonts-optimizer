@@ -36,6 +36,7 @@ import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 ```
 
 This will create the following output:
+
 ```html
 <head>
     <meta charset="utf-8">
@@ -48,14 +49,29 @@ This will create the following output:
 
 If you're using a Google Fonts compatible drop-in such as [Bunny Fonts](https://fonts.bunny.net/), you can specify the `preconnect`-URL via the `preconnectUrl` prop like this:
 
-```
-<GoogleFontsOptimizer url="https://fonts.bunny.net/css2?family=Inter:wght@200;400;500;700&display=swap" preconnectUrl="https://fonts.bunny.net" />
+```jsx
+<GoogleFontsOptimizer
+  url="https://fonts.bunny.net/css2?family=Inter:wght@200;400;500;700&display=swap"
+  preconnectUrl="https://fonts.bunny.net"
+/>
 ```
 
 If left empty, the preconnect-URL will default to `https://fonts.gstatic.com`. Otherwise, the given value is used:
 
-```
+```jsx
 <link rel="preconnect" href="https://fonts.bunny.net" crossorigin="anonymous">
+```
+
+If first fetch of a font will fail, it'll be refetched three times by default in 100 milliseconds intervals
+You can configure this by setting `retryInterval` and `retryAttempts` props
+
+```jsx
+<GoogleFontsOptimizer
+  url="https://fonts.bunny.net/css2?family=Inter:wght@200;400;500;700&display=swap"
+  preconnectUrl="https://fonts.bunny.net"
+  retryInterval="200"
+  retryAttempts="5"
+/>
 ```
 
 You can read about this performance optimization in [this excellent blog post](https://dev.to/ekafyi/first-impressions-on-next-js-automatic-font-optimization-32a1).
